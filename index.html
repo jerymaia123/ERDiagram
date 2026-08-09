@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Database ER Diagram</title>
+
+<link rel="stylesheet" href="style.css">
+```
+
+</head>
+
+<body>
+
+```
+<!-- =========================================
+     HEADER
+========================================== -->
+
+<header class="topbar">
+
+    <div class="title-section">
+        <h1>Database ER Diagram</h1>
+        <p>Entity Relationship Diagram</p>
+    </div>
+
+    <div class="controls">
+
+        <button id="zoomOut" type="button">
+            −
+        </button>
+
+        <span id="zoomLevel">
+            100%
+        </span>
+
+        <button id="zoomIn" type="button">
+            +
+        </button>
+
+        <button id="resetView" type="button">
+            Reset
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================
+     DIAGRAM AREA
+========================================== -->
+
+<main id="diagramViewport" class="diagram-viewport">
+
+    <div id="diagramCanvas" class="diagram-canvas">
+
+
+        <!-- =================================
+             RELATIONSHIP SVG
+        ================================== -->
+
+        <svg
+            id="relationshipSvg"
+            class="relationship-svg"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+
+            <defs>
+
+                <marker
+                    id="arrow"
+                    viewBox="0 0 10 10"
+                    refX="9"
+                    refY="5"
+                    markerWidth="7"
+                    markerHeight="7"
+                    orient="auto-start-reverse"
+                >
+                    <path
+                        d="M 0 0 L 10 5 L 0 10 z"
+                        fill="#64748b"
+                    >
+                    </path>
+                </marker>
+
+            </defs>
+
+
+            <!-- students.user_id -> users.id -->
+
+            <line
+                id="lineStudentsUsers"
+                class="relationship-line"
+                marker-end="url(#arrow)"
+            >
+            </line>
+
+
+            <!-- announcements.posted_by -> users.id -->
+
+            <line
+                id="lineAnnouncementsUsers"
+                class="relationship-line"
+                marker-end="url(#arrow)"
+            >
+            </line>
+
+
+            <!-- gate_logs.student_id -> students.id -->
+
+            <line
+                id="lineGateStudent"
+                class="relationship-line"
+                marker-end="url(#arrow)"
+            >
+            </line>
+
+
+            <!-- gate_logs.guard_id -> users.id -->
+
+            <line
+                id="lineGateGuard"
+                class="relationship-line"
+                marker-end="url(#arrow)"
+            >
+            </line>
+
+        </svg>
+
+
+        <!-- =================================
+             USERS TABLE
+        ================================== -->
+
+        <div
+            id="users"
+            class="entity-card"
+            data-x="80"
+            data-y="100"
+        >
+
+            <div class="entity-header">
+
+                <span class="table-icon">
+                    ▣
+                </span>
+
+                <span>
+                    users
+                </span>
+
+            </div>
+
+
+            <div class="fields">
+
+                <div class="field primary">
+                    <span class="key">PK</span>
+                    <span class="field-name">id</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">username</span>
+                    <span class="field-type">VARCHAR(50)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">password</span>
+                    <span class="field-type">VARCHAR(255)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">role</span>
+                    <span class="field-type">ENUM</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">status</span>
+                    <span class="field-type">ENUM</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">created_at</span>
+                    <span class="field-type">TIMESTAMP</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             STUDENTS TABLE
+        ================================== -->
+
+        <div
+            id="students"
+            class="entity-card"
+            data-x="520"
+            data-y="70"
+        >
+
+            <div class="entity-header">
+
+                <span class="table-icon">
+                    ▣
+                </span>
+
+                <span>
+                    students
+                </span>
+
+            </div>
+
+
+            <div class="fields">
+
+                <div class="field primary">
+                    <span class="key">PK</span>
+                    <span class="field-name">id</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field foreign">
+                    <span class="key">FK</span>
+                    <span class="field-name">user_id</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field unique">
+                    <span class="key">UQ</span>
+                    <span class="field-name">student_id</span>
+                    <span class="field-type">VARCHAR(30)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">first_name</span>
+                    <span class="field-type">VARCHAR(50)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">middle_name</span>
+                    <span class="field-type">VARCHAR(50)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">last_name</span>
+                    <span class="field-type">VARCHAR(50)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">birth_date</span>
+                    <span class="field-type">DATE</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">gender</span>
+                    <span class="field-type">VARCHAR(20)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">grade_level</span>
+                    <span class="field-type">VARCHAR(30)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">section</span>
+                    <span class="field-type">VARCHAR(50)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">contact_number</span>
+                    <span class="field-type">VARCHAR(30)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">email</span>
+                    <span class="field-type">VARCHAR(100)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">address</span>
+                    <span class="field-type">TEXT</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">photo</span>
+                    <span class="field-type">VARCHAR(255)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">enrollment_status</span>
+                    <span class="field-type">ENUM</span>
+                </div>
+
+
+                <div class="field unique">
+                    <span class="key">UQ</span>
+                    <span class="field-name">qr_token</span>
+                    <span class="field-type">VARCHAR(255)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">created_at</span>
+                    <span class="field-type">TIMESTAMP</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">updated_at</span>
+                    <span class="field-type">TIMESTAMP</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             ANNOUNCEMENTS TABLE
+        ================================== -->
+
+        <div
+            id="announcements"
+            class="entity-card"
+            data-x="80"
+            data-y="650"
+        >
+
+            <div class="entity-header">
+
+                <span class="table-icon">
+                    ▣
+                </span>
+
+                <span>
+                    announcements
+                </span>
+
+            </div>
+
+
+            <div class="fields">
+
+                <div class="field primary">
+                    <span class="key">PK</span>
+                    <span class="field-name">id</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">title</span>
+                    <span class="field-type">VARCHAR(150)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">content</span>
+                    <span class="field-type">TEXT</span>
+                </div>
+
+
+                <div class="field foreign">
+                    <span class="key">FK</span>
+                    <span class="field-name">posted_by</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">created_at</span>
+                    <span class="field-type">TIMESTAMP</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">updated_at</span>
+                    <span class="field-type">TIMESTAMP</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             GATE LOGS TABLE
+        ================================== -->
+
+        <div
+            id="gate_logs"
+            class="entity-card"
+            data-x="970"
+            data-y="550"
+        >
+
+            <div class="entity-header">
+
+                <span class="table-icon">
+                    ▣
+                </span>
+
+                <span>
+                    gate_logs
+                </span>
+
+            </div>
+
+
+            <div class="fields">
+
+                <div class="field primary">
+                    <span class="key">PK</span>
+                    <span class="field-name">id</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field foreign">
+                    <span class="key">FK</span>
+                    <span class="field-name">student_id</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field foreign">
+                    <span class="key">FK</span>
+                    <span class="field-name">guard_id</span>
+                    <span class="field-type">INT</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">action</span>
+                    <span class="field-type">ENUM</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">gate</span>
+                    <span class="field-type">VARCHAR(100)</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">status</span>
+                    <span class="field-type">ENUM</span>
+                </div>
+
+
+                <div class="field">
+                    <span></span>
+                    <span class="field-name">scanned_at</span>
+                    <span class="field-type">TIMESTAMP</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================
+     FOOTER
+========================================== -->
+
+<footer>
+
+    <span>ER Diagram</span>
+
+    <span>•</span>
+
+    <span>Database Schema Visualization</span>
+
+</footer>
+
+
+<script src="script.js"></script>
+```
+
+</body>
+</html>
